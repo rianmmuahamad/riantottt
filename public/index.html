@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification API Documentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .keyword { color: #C678DD; }
+        .function { color: #61AFEF; }
+        .string { color: #E5C07B; }
+        .comment { color: #5C6370; }
+        .operator { color: #56B6C2; }
+        .import-keyword { color: #56B6C2; }
+        pre[class*="language-"] {
+            background: #1a1a1a;
+            padding: 0;
+            margin: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            max-width: 100%;
+        }
+        code[class*="language-"] {
+            text-shadow: none;
+            background: none;
+        }
+        .copy-feedback {
+            display: none;
+            position: absolute;
+            right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .code-block-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            background: #1a1a1a;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200 min-h-screen">
+    <!-- Blurred Navbar -->
+    <nav class="fixed top-0 w-full bg-black/50 backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold">ImageClassAPI</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-4">
+                        <a href="#setup" class="text-gray-300 hover:text-white px-3 py-2">Setup</a>
+                        <a href="#imports" class="text-gray-300 hover:text-white px-3 py-2">Code</a>
+                        <a href="#api" class="text-gray-300 hover:text-white px-3 py-2">API</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="max-w-4xl mx-auto px-4 pt-24 pb-16">
+        <h1 class="text-4xl font-bold mb-8">Image Classification API</h1>
+
+        <!-- Introduction -->
+        <section class="mb-12">
+            <p class="text-gray-300 text-lg mb-6">Kelas Image Classification API yang menggunakan model ResNet18 untuk klasifikasi gambar. API ini dibangun dengan Flask dan PyTorch.</p>
+        </section>
+
+        <!-- Code Sections -->
+        <div class="space-y-12">
+
+
+
+          <!-- setup -->
+          <section id="setup" class="relative">
+            <div class="absolute left-0 -ml-8 h-full w-px bg-gray-800"></div>
+            <div class="absolute left-0 -ml-12 flex items-center justify-center w-8 h-8 rounded-full bg-gray-800 text-gray-400">1</div>
+            
+            <h2 class="text-2xl font-bold mb-4">Setup and Installation</h2>
+            <p class="text-gray-300 mb-4">Install dependensi yang diperlukan:</p>
+
+            <div class="code-block-wrapper mb-6">
+              <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                  <span class="text-red-500">bash</span>
+                  <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span class="copy-feedback">Copied!</span>
+                  </button>
+              </div>
+              <div class="code-block-inner p-4">
+                    <pre><code class="language-python">pip install flask torch torchvision pillow</code></pre>
+                </div>
+            </div>
+
+             <p class="text-gray-300 mb-4">Download file class names:</p>
+
+            <div class="code-block-wrapper mb-6">
+              <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                  <span class="text-red-500">bash</span>
+                  <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span class="copy-feedback">Copied!</span>
+                  </button>
+              </div>
+              <div class="code-block-inner p-4">
+                    <pre><code class="language-python">wget https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt</code></pre>
+                </div>
+            </div>
+
+            <p class="text-gray-300 mb-4">Struktur project:</p>
+
+            <div class="code-block-wrapper mb-6">
+              <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                  <span class="text-red-500">bash</span>
+                  <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span class="copy-feedback">Copied!</span>
+                  </button>
+              </div>
+              <div class="code-block-inner p-4">
+<pre><code class="language-python">project/
+    ├── app.py
+    └── templates/
+    └── index.html</code></pre>
+                </div>
+            </div>
+
+          
+
+
+
+
+
+
+            <!-- Imports Section -->
+            <section id="imports" class="relative">
+                <div class="absolute left-0 -ml-8 h-full w-px bg-gray-800"></div>
+                <div class="absolute left-0 -ml-12 flex items-center justify-center w-8 h-8 rounded-full bg-gray-800 text-gray-400">2</div>
+                
+                <h2 class="text-2xl font-bold mb-4">Import Libraries</h2>
+                <p class="text-gray-300 mb-4">Mengimpor library yang diperlukan untuk proyek:</p>
+
+                <div class="code-block-wrapper mb-6">
+                  <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                      <span class="text-red-500">app.py</span>
+                      <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          <span class="copy-feedback">Copied!</span>
+                      </button>
+                  </div>
+                  <div class="code-block-inner p-4">
+                        <pre><code class="language-python">from flask import Flask, render_template, request, jsonify
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import io
+import base64
+from torchvision.models import resnet18
+import os</code></pre>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-gray-300">
+                    <p>Penjelasan imports:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">Flask</code>: Framework web untuk membuat API</li>
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">torch</code>: Library PyTorch untuk deep learning</li>
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">transforms</code>: Untuk preprocessing gambar</li>
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">PIL</code>: Untuk manipulasi gambar</li>
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">io</code>: Untuk operasi input/output byte</li>
+                        <li><code class="bg-gray-800 px-2 py-0.5 rounded">resnet18</code>: Model pre-trained untuk klasifikasi gambar</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Model Loading Section -->
+            <section id="model" class="relative">
+                <div class="absolute left-0 -ml-8 h-full w-px bg-gray-800"></div>
+                <div class="absolute left-0 -ml-12 flex items-center justify-center w-8 h-8 rounded-full bg-gray-800 text-gray-400">3</div>
+
+                <h2 class="text-2xl font-bold mb-4">Model Configuration</h2>
+                <p class="text-gray-300 mb-4">Konfigurasi model dan transformasi gambar:</p>
+
+                <div class="code-block-wrapper mb-6">
+                  <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                        <span class="text-red-500">model_config.py</span>
+                       <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          <span class="copy-feedback">Copied!</span>
+                      </button>
+                    </div>
+                    <div class="code-block-inner p-4">
+                        <pre><code class="language-python">def load_model():
+    model = resnet18(pretrained=True)
+    model.eval()
+    return model
+
+transform = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.Lambda(lambda x: x.convert('RGB')),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                       std=[0.229, 0.224, 0.225])
+])</code></pre>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-gray-300">
+                    <p>Penjelasan konfigurasi:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>load_model()</strong>: Memuat model ResNet18 pre-trained dan mengaturnya ke mode evaluasi</li>
+                        <li><strong>transform</strong>: Pipeline preprocessing gambar:
+                            <ul class="list-circle pl-6 mt-2 space-y-1">
+                                <li>Resize gambar ke 256px</li>
+                                <li>Crop tengah ke 224px</li>
+                                <li>Konversi ke format RGB</li>
+                                <li>Konversi ke tensor</li>
+                                <li>Normalisasi dengan mean dan std ImageNet</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- API Endpoints Section -->
+            <section id="api" class="relative">
+                <div class="absolute left-0 -ml-8 h-full w-px bg-gray-800"></div>
+                <div class="absolute left-0 -ml-12 flex items-center justify-center w-8 h-8 rounded-full bg-gray-800 text-gray-400">4</div>
+
+                <h2 class="text-2xl font-bold mb-4">API Endpoints</h2>
+                <p class="text-gray-300 mb-4">Implementasi endpoint untuk prediksi gambar:</p>
+
+                <div class="code-block-wrapper mb-6">
+                  <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                        <span class="text-red-500">routes.py</span>
+                       <button class="copy-button text-gray-400 hover:text-white relative" onclick="copyCode(this)">
+                          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          <span class="copy-feedback">Copied!</span>
+                      </button>
+                    </div>
+                    <div class="code-block-inner p-4">
+                        <pre><code class="language-python">@app.route('/predict', methods=['POST'])
+def predict():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'})
+    
+    try:
+        file = request.files['file']
+        image_bytes = file.read()
+        image = Image.open(io.BytesIO(image_bytes))
+        
+        # Preprocess image
+        tensor = transform(image).unsqueeze(0)
+        
+        # Make prediction
+        with torch.no_grad():
+            outputs = model(tensor)
+            _, predicted = outputs.max(1)
+            
+            class_name = classes[predicted.item()]
+            confidence = torch.nn.functional.softmax(outputs[0], dim=0)[predicted].item()
+        
+        return jsonify({
+            'class_name': class_name,
+            'confidence': f"{confidence*100:.2f}%"
+        })
+    
+    except Exception as e:
+        return jsonify({
+            'error': f'Error processing image: {str(e)}'
+        }), 500</code></pre>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-gray-300">
+                    <p>Penjelasan endpoint:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Route /predict</strong>: Endpoint POST untuk klasifikasi gambar</li>
+                        <li><strong>Proses:</strong>
+                            <ul class="list-circle pl-6 mt-2 space-y-1">
+                                <li>Menerima file gambar dari request</li>
+                                <li>Membaca dan membuka gambar dengan PIL</li>
+                                <li>Preprocessing gambar menggunakan transform</li>
+                                <li>Melakukan prediksi dengan model</li>
+                                <li>Menghitung confidence score</li>
+                                <li>Mengembalikan nama kelas dan confidence dalam format JSON</li>
+                            </ul>
+                        </li>
+                        <li><strong>Error Handling:</strong> Menangani kesalahan dan mengembalikan pesan error yang sesuai</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="md:hidden fixed bottom-0 w-full bg-black border-t border-gray-800">
+      <div class="flex justify-around items-center h-16 px-8 py-4 rounded-full">
+        <a href="#setup" class="text-gray-400">Setup</a>
+        <a href="#imports" class="text-gray-400">Code</a>
+        <a href="#api" class="text-gray-400">API</a>
+      </div>
+    </nav>
+    <script>
+      function copyCode(button) {
+          const codeBlock = button.closest('.code-block-wrapper').querySelector('code');
+          const text = codeBlock.textContent;
+          
+          navigator.clipboard.writeText(text).then(() => {
+              // Show feedback
+              const feedback = button.querySelector('.copy-feedback');
+              feedback.style.display = 'block';
+              
+              // Hide feedback after 2 seconds
+              setTimeout(() => {
+                  feedback.style.display = 'none';
+              }, 2000);
+          }).catch(err => {
+              console.error('Failed to copy text:', err);
+          });
+      }
+  </script>
+</body>
+</html>
